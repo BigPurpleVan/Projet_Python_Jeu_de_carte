@@ -27,7 +27,6 @@ class Player :
             self.won = True
             for card in self.hand :
                 #On compare tous les symboles de cartes au symbole de la 1ere carte, si y'a un different, on continue la partie
-                print(card.show_card())
                 if card.color != self.hand[0].color :
                     self.won = False
             if self.won:
@@ -73,6 +72,7 @@ def init():
             player.hand.append(playing_deck.pop(i))
 
 def save():
+    #Une tentative de sauvegarde a été faite mais par manque de temps et un bug que je n'arrive pas à corriger je n'y arrive pas (si vous tu sais comment mettre des objets python dans un json je suis pas contre >w<)
     json_object =[]
     for player in player_list:
         json_object.append({"name" : player.name, "hand" : player.hand})
@@ -118,6 +118,7 @@ while True :
             print(f"{player.name} à gagné !")
             break
     if player.verify_win():
+        #on vérifie si le joueur a gagner pour lui demander si il veux rejouer
         choice_replay = choice_input("1 pour rejouer, 2 pour quitter", [1,2], "Action invalide, veillez choisir 1 ou 2")
         if choice_replay == 1:
             init()
@@ -125,9 +126,10 @@ while True :
         else :
             break
     else: 
+        #on demande aux joueurs si ils veulent continuer la partie ou quitter et sauvegarder (save qui fonctionne pas)
         choice_continue = choice_input("1 pour continuer, 2 pour sauvegarder et quitter", [1,2], "Action invalide, veillez choisir 1 ou 2")
         if choice_continue == 1 :
             continue
         else :
-            save()
+#           save()
             break
