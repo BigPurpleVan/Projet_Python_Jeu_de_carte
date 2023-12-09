@@ -1,4 +1,5 @@
 import random
+import json
 
 #On defini un classe card pour créer notre paquet
 class Card :
@@ -23,9 +24,10 @@ class Player :
         print("Votre main " + hand_string)
     #fonction pour check si le joueur a gagné
     def verify_win(self):
+            self.won = True
             for card in self.hand :
                 #On compare tous les symboles de cartes au symbole de la 1ere carte, si y'a un different, on continue la partie
-                self.won = True
+                print(card.show_card())
                 if card.color != self.hand[0].color :
                     self.won = False
             if self.won:
@@ -70,6 +72,13 @@ def init():
         for i in range(10) :
             player.hand.append(playing_deck.pop(i))
 
+def save():
+    json_object =[]
+    for player in player_list:
+        json_object.append({"name" : player.name, "hand" : player.hand})
+    with open("save.json", "w") as my_file:
+        json.dump(json_object, my_file, indent=4)
+        
 
 init()
 #game loop
@@ -120,4 +129,5 @@ while True :
         if choice_continue == 1 :
             continue
         else :
+            save()
             break
